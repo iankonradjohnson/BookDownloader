@@ -1,6 +1,6 @@
 import yaml
 import sys
-from image_downloader_factory import ImageDownloaderFactory
+from factory.image_downloader_factory import ImageDownloaderFactory
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
         config_data = yaml.safe_load(config_stream)
 
     downloader = ImageDownloaderFactory.create_downloader(config_data)
-    downloader.download_images()
+    downloader.download()
 
 
 if __name__ == "__main__":
