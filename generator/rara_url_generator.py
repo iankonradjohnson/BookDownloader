@@ -1,9 +1,8 @@
-from image_downloader import ImageDownloader
+from generator.url_generator import UrlGenerator
 
 
-class RaraDownloader(ImageDownloader):
+class RaraUrlGenerator(UrlGenerator):
     def __init__(self, config):
-        super().__init__(config.get("num_pages"), config.get("output_path"))
         self.start_id = config.get("start_id")
 
     def generate_url(self, page_num):

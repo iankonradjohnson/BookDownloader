@@ -1,0 +1,3 @@
+output_path: C:\Users\ianko\Desktop\Projects\AbacusBooks\Real-ESRGAN\datasets\engravings_dataset\images\BookEngravings
+downloader_type: batch_archive_pdf
+input_list: C:\Users\ianko\Desktop\Projects\AbacusBooks\AbacusApplications\BookDownloader\lists\archive-pdfs.txt
