@@ -1,7 +1,7 @@
-from downloader.batch_archive_pdf_downloader import BatchArchivePdfDownloader
-from downloader.downloader import Downloader
-from downloader.numbered_url_book_downloader import NumberedUrlBookDownloader
-from generator.rara_url_generator import RaraUrlGenerator
+from python.src.downloader.batch_archive_pdf_downloader import BatchArchivePdfDownloader
+from python.src.downloader.downloader import Downloader
+from python.src.downloader.numbered_url_book_downloader import NumberedUrlBookDownloader
+from python.src.generator.rara_url_generator import RaraUrlGenerator
 
 
 class ImageDownloaderFactory:

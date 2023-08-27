@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 from os import path as osp
 
-from downloader.downloader import Downloader
+from python.src.downloader.downloader import Downloader
 
 
 class BatchImageDownloader(Downloader):

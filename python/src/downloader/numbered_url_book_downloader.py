@@ -1,11 +1,10 @@
 import os
-from abc import abstractmethod
 
 import requests
 from tqdm import tqdm
 
-from downloader.downloader import Downloader
-from generator.url_generator import UrlGenerator
+from python.src.downloader.downloader import Downloader
+from python.src.generator.url_generator import UrlGenerator
 
 
 def create_image_name(i):

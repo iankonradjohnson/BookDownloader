@@ -1,4 +1,4 @@
-from generator.url_generator import UrlGenerator
+from python.src.generator.url_generator import UrlGenerator
 
 
 class RaraUrlGenerator(UrlGenerator):

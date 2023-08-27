@@ -1,6 +1,7 @@
 import yaml
 import sys
-from factory.image_downloader_factory import ImageDownloaderFactory
+
+from python.src.factory.image_downloader_factory import ImageDownloaderFactory
 
 
 def main():
