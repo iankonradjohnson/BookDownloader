@@ -1,4 +1,4 @@
-from python.src.downloader.batch_archive_pdf_downloader import BatchArchivePdfDownloader
+from python.src.downloader.batch_archive_pdf_downloader import BatchArchiveDownloader
 from python.src.downloader.downloader import Downloader
 from python.src.downloader.numbered_url_book_downloader import NumberedUrlBookDownloader
 from python.src.generator.rara_url_generator import RaraUrlGenerator
@@ -12,5 +12,7 @@ class ImageDownloaderFactory:
             return NumberedUrlBookDownloader(RaraUrlGenerator(config), config)
         elif downloader_type == "arachne":
             return NumberedUrlBookDownloader(RaraUrlGenerator(config), config)
-        elif downloader_type == "batch_archive_pdf":
-            return BatchArchivePdfDownloader(config)
+        elif downloader_type == "batch_archive_zip":
+            return BatchArchiveDownloader(config, download_type="PROCESSED_ZIP")
+        elif downloader_type == "batch_archive_tar":
+            return BatchArchiveDownloader(config, download_type="ORIGINAL_TAR")
