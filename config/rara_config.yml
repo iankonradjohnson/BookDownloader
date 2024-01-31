@@ -1,4 +1,5 @@
-output_path: C:\Users\ianko\Desktop\Projects\AbacusBooks\Books\EgyptianArchitecture_LuigiCanina
+output_path: /Users/iankonradjohnson/base/abacus/books/AntiquitiesArchitecture_LuigiCanina/1_Egypt/raw/rara
 downloader_type: rara
 num_pages: 440
-start_id: 15372572
+start_id: 15372573
+offset: 0 # default to 0
