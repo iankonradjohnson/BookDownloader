@@ -1,0 +1,4 @@
+downloader_type: rara_manifest
+manifest_url: <manifest-url>
+output_path: <output-path>
+structure_id: <structure-id>
