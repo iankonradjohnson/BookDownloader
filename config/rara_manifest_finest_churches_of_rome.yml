@@ -1,0 +1,25 @@
+#downloader_type: rara_manifest
+#manifest_url: https://www.e-rara.ch/i3f/v20/13697102/manifest
+#output_path: /Users/iankonradjohnson/base/abacus/BookProjects/CollectionOfTheFinestChurchesInRome/V2/raw
+#structure_id: https://www.e-rara.ch/i3f/v20/13697102/range/13697102
+
+#downloader_type: rara_manifest
+#manifest_url: https://www.e-rara.ch/i3f/v20/13697352/manifest
+#output_path: /Users/iankonradjohnson/base/abacus/BookProjects/CollectionOfTheFinestChurchesInRome/V3/raw
+#structure_id: https://www.e-rara.ch/i3f/v20/13697352/range/13697352
+
+#downloader_type: rara_manifest
+#manifest_url: https://www.e-rara.ch/i3f/v20/13697645/manifest
+#output_path: /Users/iankonradjohnson/base/abacus/BookProjects/CollectionOfTheFinestChurchesInRome/V4/raw
+#structure_id: https://www.e-rara.ch/i3f/v20/13697645/range/13697645
+
+#downloader_type: rara_manifest
+#manifest_url: https://www.e-rara.ch/i3f/v20/13697847/manifest
+#output_path: /Users/iankonradjohnson/base/abacus/BookProjects/CollectionOfTheFinestChurchesInRome/V5/raw
+#structure_id: https://www.e-rara.ch/i3f/v20/13697847/range/13697847
+
+downloader_type: rara_manifest
+manifest_url: https://www.e-rara.ch/i3f/v20/13697983/manifest
+output_path: /Users/iankonradjohnson/base/abacus/BookProjects/CollectionOfTheFinestChurchesInRome/V6/raw
+structure_id: https://www.e-rara.ch/i3f/v20/13697983/range/13697983
+

@@ -16,6 +16,9 @@ class BatchDownloader:
     def __init__(self, output_dir):
         self.output_dir = output_dir
 
+        if not os.path.exists(self.output_dir):
+            os.mkdir(self.output_dir)
+
     def batch_download(self, urls: List[str]):
 
         with ThreadPoolExecutor() as executor:
@@ -29,10 +32,13 @@ class BatchDownloader:
     @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     def download_image(self, url: str, i: int):
         try:
-            response = requests.get(url)
-            response.raise_for_status()
             path = os.path.join(self.output_dir, FileUtility.create_image_name(i))
-            with open(path, 'wb') as f:
-                f.write(response.content)
+            if not os.path.exists(path):
+                response = requests.get(url)
+                response.raise_for_status()
+                with open(path, 'wb') as f:
+                    f.write(response.content)
+            else:
+                print(f"Image exists at path: {path}, skipping...")
         except requests.RequestException as e:
             print(f"Error downloading {url}: {e}")

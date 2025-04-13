@@ -1,4 +1,4 @@
-downloader_type: rara_manifest
-manifest_url: https://www.e-rara.ch/i3f/v20/15430726/manifest
-output_path: /Users/iankonradjohnson/Documents/Books/AntiquitiesArchitecture_LuigiCanina/2_Greece/images/rara
-structure_id: https://www.e-rara.ch/i3f/v20/15430726/range/15430726
+ downloader_type: rara_manifest
+ manifest_url: https://www.e-rara.ch/i3f/v20/15430726/manifest
+ output_path: /Users/iankonradjohnson/Downloads/2_Greece_Raw_Scans
+ structure_id: https://www.e-rara.ch/i3f/v20/15430726/range/15430726
