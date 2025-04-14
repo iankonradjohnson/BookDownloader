@@ -1,7 +1,5 @@
 import os
 import logging
-import io
-import time
 import threading
 from concurrent.futures import ThreadPoolExecutor
 
@@ -132,66 +130,18 @@ class BatchArchiveDownloader(Downloader):
         # Create a subfolder for extraction using the identifier
         extract_dir = os.path.join(self.save_folder, identifier)
         
-        # Create an extraction progress bar if the file is large enough
-        file_size = os.path.getsize(archive_path)
-        if file_size > 10 * 1024 * 1024:  # Only show for files > 10MB
-            extract_progress = tqdm(
-                total=100, 
-                desc=f"Extracting {os.path.basename(archive_path)}", 
-                leave=True
+        # Get appropriate extractor for the file type
+        extractor = ExtractorFactory.get_extractor(archive_path)
+        if extractor:
+            # Extract and optionally move to trash
+            # (Progress bar is handled inside the extractor)
+            extractor.extract(
+                archive_path=archive_path, 
+                output_dir=extract_dir,
+                move_to_trash=self.trash_archives
             )
-            
-            # Start a thread to update the progress bar during extraction
-            stop_thread = threading.Event()
-            
-            def update_extract_progress():
-                while not stop_thread.is_set():
-                    if os.path.exists(extract_dir):
-                        # Approximate progress by checking number of files
-                        file_count = sum(len(files) for _, _, files in os.walk(extract_dir))
-                        # Update progress (max 99 to leave final update for completion)
-                        extract_progress.n = min(99, file_count)
-                        extract_progress.refresh()
-                    time.sleep(0.5)
-            
-            # Start progress update thread
-            progress_thread = threading.Thread(target=update_extract_progress)
-            progress_thread.daemon = True
-            progress_thread.start()
         else:
-            extract_progress = None
-            stop_thread = None
-            progress_thread = None
-        
-        try:
-            # Get appropriate extractor for the file type
-            extractor = ExtractorFactory.get_extractor(archive_path)
-            if extractor:
-                logging.info(f"Extracting {archive_path} to {extract_dir}")
-                
-                # Extract and optionally move to trash
-                extractor.extract(
-                    archive_path=archive_path, 
-                    output_dir=extract_dir,
-                    move_to_trash=self.trash_archives
-                )
-                
-                if self.trash_archives:
-                    logging.info(f"Archive file moved to trash after extraction: {archive_path}")
-            else:
-                logging.warning(f"No suitable extractor found for {archive_path}")
-                
-            # Complete the progress bar if it exists
-            if extract_progress:
-                extract_progress.n = 100
-                extract_progress.refresh()
-                extract_progress.close()
-        finally:
-            # Stop the progress update thread if it exists
-            if stop_thread:
-                stop_thread.set()
-                if progress_thread:
-                    progress_thread.join(timeout=1.0)
+            logging.warning(f"No suitable extractor found for {archive_path}")
 
     def create_url(self, filename, identifier):
         download_url = f"https://archive.org/download/{identifier}/{filename}"

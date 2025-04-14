@@ -9,6 +9,7 @@ A utility for downloading books and other documents from various online sources.
 - Archive extraction support for ZIP and TAR files
 - Automatic archive cleanup (moves to system trash)
 - Batch downloading capability
+- Real-time progress tracking for downloads and extractions
 
 ## Archive Extraction
 
@@ -27,3 +28,14 @@ The `trash_archives` option uses system-appropriate methods:
 - Windows: Uses the winshell library to move to Recycle Bin
 - Linux: Uses trash-cli if available, otherwise creates a .trash directory
 - Fallback: Creates a local .trash directory in the same folder as the archive
+
+## Progress Tracking
+
+BookDownloader provides detailed progress tracking throughout the download and extraction process:
+
+- **Overall progress**: Shows the total number of books being processed and current progress
+- **Download progress**: Individual progress bars for each file being downloaded, showing speed and ETA
+- **Extraction progress**: Detailed progress for archive extraction, showing file-by-file progress
+- **Trash confirmation**: Confirmation when archives are moved to trash after extraction
+
+This makes it easy to monitor long-running downloads of large book archives.

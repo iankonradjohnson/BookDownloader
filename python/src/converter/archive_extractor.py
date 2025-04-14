@@ -3,6 +3,7 @@ import zipfile
 import tarfile
 import logging
 from abc import ABC, abstractmethod
+from tqdm import tqdm
 
 from python.src.util.file_utility import FileUtility
 
@@ -58,7 +59,19 @@ class ZipExtractor(ArchiveExtractor):
         
         try:
             with zipfile.ZipFile(archive_path, 'r') as zip_ref:
-                zip_ref.extractall(output_dir)
+                # Get list of files to extract with their sizes
+                file_info_list = zip_ref.infolist()
+                total_size = sum(info.file_size for info in file_info_list)
+                
+                # Create progress bar for extraction
+                with tqdm(total=total_size, unit='B', unit_scale=True, 
+                         desc=f"Extracting {os.path.basename(archive_path)}") as pbar:
+                     
+                    # Extract files one by one with progress tracking
+                    for file_info in file_info_list:
+                        zip_ref.extract(file_info, output_dir)
+                        pbar.update(file_info.file_size)
+                        
             logging.info(f"Successfully extracted ZIP archive to {output_dir}")
             
             # Move archive to trash if requested
@@ -104,7 +117,18 @@ class TarExtractor(ArchiveExtractor):
         
         try:
             with tarfile.open(archive_path, 'r:*') as tar_ref:
-                tar_ref.extractall(output_dir)
+                # Get members list for progress tracking
+                members = tar_ref.getmembers()
+                
+                # Create progress bar for extraction
+                with tqdm(total=len(members), unit='file', 
+                         desc=f"Extracting {os.path.basename(archive_path)}") as pbar:
+                    
+                    # Extract files one by one with progress tracking
+                    for member in members:
+                        tar_ref.extract(member, output_dir)
+                        pbar.update(1)
+                
             logging.info(f"Successfully extracted TAR archive to {output_dir}")
             
             # Move archive to trash if requested
