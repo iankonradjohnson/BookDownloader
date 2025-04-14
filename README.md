@@ -10,6 +10,7 @@ A utility for downloading books and other documents from various online sources.
 - Automatic archive cleanup (moves to system trash)
 - Batch downloading capability
 - Real-time progress tracking for downloads and extractions
+- Standalone archive extraction tool
 
 ## Archive Extraction
 
@@ -39,3 +40,47 @@ BookDownloader provides detailed progress tracking throughout the download and e
 - **Trash confirmation**: Confirmation when archives are moved to trash after extraction
 
 This makes it easy to monitor long-running downloads of large book archives.
+
+## Standalone Archive Extraction Tool
+
+A standalone archive extraction tool is included that can be used independently of the main BookDownloader system. This is useful for extracting archives that have already been downloaded or for batch processing existing archives.
+
+### Usage
+
+```bash
+# Basic usage with command line arguments
+python scripts/extract_archives.py --input /path/to/archives --output /path/to/output
+
+# Advanced options
+python scripts/extract_archives.py --input /path/to/archives --output /path/to/output --recursive --jobs 4
+
+# Using a configuration file
+python scripts/extract_archives.py --config config/archive_extractor_config.yml
+```
+
+### Command Line Options
+
+- `--input` / `-i`: Path to archive file or directory containing archives
+- `--output` / `-o`: Path to output directory (default: same as input)
+- `--config` / `-c`: Path to YAML configuration file
+- `--no-subfolders`: Do not create subfolders based on archive identifiers
+- `--keep-archives`: Do not move archives to trash after extraction
+- `--recursive` / `-r`: Search directories recursively for archives
+- `--jobs` / `-j`: Number of parallel extraction jobs (default: 1)
+
+### Configuration File
+
+Example configuration (see `config/archive_extractor_config.yml`):
+
+```yaml
+# Input/Output Paths
+input_path: "/path/to/archives" 
+output_base_path: "/path/to/output"
+
+# Extraction Options
+use_identifier_folders: true  # Create subfolders per archive
+trash_archives: true          # Move archives to trash after extraction
+recursive: false              # Whether to search subdirectories
+```
+
+The standalone extractor supports all the same features as the integrated extractor, including progress tracking and archive cleanup.

@@ -1,0 +1,19 @@
+# Archive Extractor Configuration
+# This config file controls the behavior of the standalone archive extraction tool
+
+# Input/Output Paths
+input_path: "/path/to/archives"  # Path to directory containing archives or a single archive file
+output_base_path: "/path/to/output"  # Where to extract files (optional, defaults to input directory)
+
+# Extraction Options
+use_identifier_folders: true  # Create subfolders named after the archive identifiers
+trash_archives: true  # Move archives to trash after successful extraction
+recursive: false  # Whether to search for archives in subdirectories
+
+# Archive File Types
+archive_patterns:
+  - "*.zip"
+  - "*.tar"
+  - "*.tar.gz"
+  - "*.tgz"
+  - "*.tar.bz2"

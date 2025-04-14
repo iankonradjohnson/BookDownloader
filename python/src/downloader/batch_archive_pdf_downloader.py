@@ -7,7 +7,6 @@ import requests
 from tqdm import tqdm
 
 from python.src.downloader.downloader import Downloader
-from python.src.converter.archive_extractor import ExtractorFactory
 
 PROCESSED_ZIP = "PROCESSED_ZIP"
 ORIGINAL_TAR = "ORIGINAL_TAR"
@@ -127,21 +126,9 @@ class BatchArchiveDownloader(Downloader):
             logging.warning(f"Archive file not found: {archive_path}")
             return
             
-        # Create a subfolder for extraction using the identifier
-        extract_dir = os.path.join(self.save_folder, identifier)
-        
-        # Get appropriate extractor for the file type
-        extractor = ExtractorFactory.get_extractor(archive_path)
-        if extractor:
-            # Extract and optionally move to trash
-            # (Progress bar is handled inside the extractor)
-            extractor.extract(
-                archive_path=archive_path, 
-                output_dir=extract_dir,
-                move_to_trash=self.trash_archives
-            )
-        else:
-            logging.warning(f"No suitable extractor found for {archive_path}")
+        # Use the archive manager to extract the file
+        output_dir = os.path.join(self.save_folder, identifier)
+        self.archive_manager.extract_single_archive(archive_path)
 
     def create_url(self, filename, identifier):
         download_url = f"https://archive.org/download/{identifier}/{filename}"

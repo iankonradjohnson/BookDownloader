@@ -1,0 +1,19 @@
+book_id: "buildings.plates.1875"
+book_projects_path: "/Users/iankonradjohnson/base/abacus/BookDownloader/downloaded_books"
+
+downloader_type: "batch_archive_zip"  # Type of downloader to use (rara, archive, numbered, batch_archive_zip)
+input_list: "/Users/iankonradjohnson/base/abacus/BookDownloader/lists/test.txt"  # List of book IDs to download
+output_path: "/Users/iankonradjohnson/base/abacus/BookDownloader/downloaded_books"  # Where to save downloaded files
+
+# Download Settings
+max_concurrent_downloads: 5  # Maximum number of concurrent downloads
+retry_count: 3  # Number of times to retry failed downloads
+
+# Processing Modules
+modules:
+  - BookDownloader:
+      downloader_type: batch_archive_zip
+  - BookInvestigator:
+      enabled: true
+  - ArchiveExtractor:
+      enabled: true
