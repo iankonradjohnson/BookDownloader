@@ -2,9 +2,9 @@ from python.src.records.book_data import BookData
 
 
 class BookInvestigator:
-    def __init__(self):
+    def __init__(self, book_id):
         pass
 
-    def investigate(self, book_id):
+    def investigate(self):
         # Hollow implementation
         return BookData("Sample Book", "2023")

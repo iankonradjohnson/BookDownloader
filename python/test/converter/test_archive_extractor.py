@@ -5,7 +5,7 @@ import zipfile
 import tarfile
 import shutil
 
-from python.src.converter.archive_extractor import ExtractorFactory, ZipExtractor, TarExtractor
+from python.src.processor.archive_extractor import ExtractorFactory, ZipExtractor, TarExtractor
 
 
 class TestArchiveExtractor(unittest.TestCase):

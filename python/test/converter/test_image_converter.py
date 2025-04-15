@@ -1,10 +1,8 @@
-from unittest import TestCase
-
 import unittest
 import os
-from PIL import Image, UnidentifiedImageError
+from PIL import Image
 
-from python.src.converter.image_converter import ImageConverter
+from python.src.processor.converter.image_converter import ImageConverter
 
 
 class TestImageConverter(unittest.TestCase):

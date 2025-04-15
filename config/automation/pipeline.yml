@@ -1,9 +1,5 @@
-book_id: "buildings.plates.1875"
-book_projects_path: "/Users/iankonradjohnson/base/abacus/BookDownloader/downloaded_books"
-
-downloader_type: "batch_archive_zip"  # Type of downloader to use (rara, archive, numbered, batch_archive_zip)
-input_list: "/Users/iankonradjohnson/base/abacus/BookDownloader/lists/test.txt"  # List of book IDs to download
-output_path: "/Users/iankonradjohnson/base/abacus/BookDownloader/downloaded_books"  # Where to save downloaded files
+book_id: "gri_33125016354728"
+book_projects_path: "/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects"
 
 # Download Settings
 max_concurrent_downloads: 5  # Maximum number of concurrent downloads
