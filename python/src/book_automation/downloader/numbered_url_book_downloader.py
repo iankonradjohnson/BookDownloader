@@ -3,9 +3,9 @@ import os
 import requests
 from tqdm import tqdm
 
-from python.src.downloader.downloader import Downloader
-from python.src.generator.url_generator import UrlGenerator
-from python.src.util.file_utility import FileUtility
+from python.src.book_automation.downloader.downloader import Downloader
+from python.src.book_automation.generator.url_generator import UrlGenerator
+from python.src.book_automation.util.file_utility import FileUtility
 
 
 class NumberedUrlBookDownloader(Downloader):

@@ -2,7 +2,7 @@ import unittest
 import os
 from PIL import Image
 
-from python.src.processor.converter.image_converter import ImageConverter
+from python.src.book_automation.processor.converter.image_converter import ImageConverter
 
 
 class TestImageConverter(unittest.TestCase):

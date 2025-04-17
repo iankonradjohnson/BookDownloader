@@ -5,8 +5,8 @@ import zipfile
 import shutil
 from unittest.mock import patch, MagicMock
 
-from python.src.downloader.batch_archive_pdf_downloader import BatchArchiveDownloader, PROCESSED_ZIP
-from python.src.util.file_utility import FileUtility
+from python.src.book_automation.downloader.batch_archive_pdf_downloader import \
+    BatchArchiveDownloader
 
 
 class TestBatchArchiveDownloader(unittest.TestCase):

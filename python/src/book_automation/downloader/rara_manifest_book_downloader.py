@@ -1,8 +1,8 @@
 import requests
 
-from python.src.downloader.batch_downloader import BatchDownloader
-from python.src.downloader.downloader import Downloader
-from python.src.generator.rara_url_generator import RaraUrlGenerator
+from python.src.book_automation.downloader.batch_downloader import BatchDownloader
+from python.src.book_automation.downloader.downloader import Downloader
+from python.src.book_automation.generator.rara_url_generator import RaraUrlGenerator
 
 
 class RaraManifestBookDownloader(Downloader):

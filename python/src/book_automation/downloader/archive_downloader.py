@@ -1,14 +1,13 @@
 import logging
 import os
-import string
 import threading
 
 import requests
 from tqdm import tqdm
 
-from python.src.downloader.batch_archive_pdf_downloader import PROCESSED_ZIP, ORIGINAL_TAR, \
+from python.src.book_automation.downloader.batch_archive_pdf_downloader import PROCESSED_ZIP, ORIGINAL_TAR, \
     DEFAULT_CHUNK_SIZE
-from python.src.downloader.downloader import Downloader
+from python.src.book_automation.downloader.downloader import Downloader
 
 
 class ArchiveDownloader(Downloader):

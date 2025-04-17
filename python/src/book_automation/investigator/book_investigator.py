@@ -1,4 +1,4 @@
-from python.src.records.book_data import BookData
+from python.src.book_automation.records.book_data import BookData
 
 
 class BookInvestigator:

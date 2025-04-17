@@ -4,7 +4,7 @@ import logging
 from typing import List, Optional
 import glob
 
-from python.src.processor.image_processor import ImageProcessor
+from python.src.book_automation.processor.image_processor import ImageProcessor
 
 
 class ThreadedBookRunner:

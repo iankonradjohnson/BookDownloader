@@ -5,7 +5,8 @@ import zipfile
 import tarfile
 import shutil
 
-from python.src.processor.archive_extractor import ExtractorFactory, ZipExtractor, TarExtractor
+from python.src.book_automation.processor.archive_extractor import ExtractorFactory, ZipExtractor, \
+    TarExtractor
 
 
 class TestArchiveExtractor(unittest.TestCase):

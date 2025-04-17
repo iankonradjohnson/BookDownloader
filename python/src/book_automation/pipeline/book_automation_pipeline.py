@@ -2,15 +2,11 @@ import os
 from typing import Dict
 
 # Import directly from the BatchImageProcessor project path
-import sys
 from batch_image_processor_project.python.src.processors.batch.batch_processor import BatchProcessor
 
-from python.src.downloader.archive_downloader import ArchiveDownloader
-from python.src.investigator.book_investigator import BookInvestigator
-from python.src.pipeline.threaded_book_runner import ThreadedBookRunner
-from python.src.processor.converter.pil_image_converter import PilImageConverter
-from python.src.records.book_data import BookData
-from python.src.scantailor import ScanTailorService
+from python.src.book_automation.downloader.archive_downloader import ArchiveDownloader
+from python.src.book_automation.investigator.book_investigator import BookInvestigator
+from python.src.book_automation.records.book_data import BookData
 
 
 class BookAutomationPipeline:
@@ -53,7 +49,7 @@ class BookAutomationPipeline:
 
 
 if __name__ == "__main__":
-    config_path = "/Users/iankonradjohnson/base/abacus/BookDownloader/config/automation/pipeline.yml"
+    config_path = "/config/automation/pipeline.yml"
 
     config = None
     with open(config_path, 'r') as file:

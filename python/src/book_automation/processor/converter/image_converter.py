@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from python.src.processor.image_processor import ImageProcessor
+from python.src.book_automation.processor.image_processor import ImageProcessor
 
 
 class ImageConverter(ImageProcessor, ABC):

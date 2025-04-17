@@ -1,12 +1,9 @@
 import os
-import logging
-import threading
 from concurrent.futures import ThreadPoolExecutor
 
-import requests
 from tqdm import tqdm
 
-from python.src.downloader.downloader import Downloader
+from python.src.book_automation.downloader.downloader import Downloader
 
 PROCESSED_ZIP = "PROCESSED_ZIP"
 ORIGINAL_TAR = "ORIGINAL_TAR"

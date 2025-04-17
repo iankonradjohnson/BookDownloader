@@ -1,4 +1,4 @@
-from python.src.generator.url_generator import UrlGenerator
+from python.src.book_automation.generator.url_generator import UrlGenerator
 
 URL_FORMAT = "https://www.e-rara.ch/zut/download/webcache/0/{image_id}"
 

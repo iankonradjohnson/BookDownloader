@@ -8,7 +8,7 @@ from typing import List
 
 from tqdm import tqdm
 
-from python.src.util.file_utility import FileUtility
+from python.src.book_automation.util.file_utility import FileUtility
 
 
 class BatchDownloader:

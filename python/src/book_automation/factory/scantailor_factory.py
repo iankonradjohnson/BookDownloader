@@ -1,5 +1,6 @@
 from typing import Dict, Any
-from python.src.scantailor.scantailor_service import ScanTailorService
+
+from python.src.book_automation.scantailor.scantailor_service import ScanTailorService
 
 
 class ScanTailorFactory:

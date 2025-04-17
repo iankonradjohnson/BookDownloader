@@ -5,7 +5,7 @@ import logging
 from abc import ABC, abstractmethod
 from tqdm import tqdm
 
-from python.src.util.file_utility import FileUtility
+from python.src.book_automation.util.file_utility import FileUtility
 
 
 class ArchiveExtractor(ABC):

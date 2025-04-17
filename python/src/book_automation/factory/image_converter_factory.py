@@ -1,6 +1,7 @@
 from typing import Dict, Any
 
-from python.src.processor.converter.image_converter import ImageConverter, PilImageConverter
+from python.src.book_automation.processor.converter.image_converter import ImageConverter
+from python.src.book_automation.processor.converter.pil_image_converter import PilImageConverter
 
 
 class ImageConverterFactory:
