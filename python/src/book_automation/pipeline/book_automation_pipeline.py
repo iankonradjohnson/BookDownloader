@@ -1,7 +1,7 @@
 import os
 from typing import Dict
 
-from python.src.processors.batch.batch_processor import BatchProcessor
+from batch_image_processor.processors.batch.batch_processor import BatchProcessor
 
 from python.src.book_automation.downloader.archive_downloader import ArchiveDownloader
 from python.src.book_automation.investigator.book_investigator import BookInvestigator
