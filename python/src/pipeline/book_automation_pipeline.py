@@ -1,6 +1,10 @@
 import os
 from typing import Dict
 
+# Import directly from the BatchImageProcessor project path
+import sys
+from batch_image_processor_project.python.src.processors.batch.batch_processor import BatchProcessor
+
 from python.src.downloader.archive_downloader import ArchiveDownloader
 from python.src.investigator.book_investigator import BookInvestigator
 from python.src.pipeline.threaded_book_runner import ThreadedBookRunner
@@ -38,7 +42,14 @@ class BookAutomationPipeline:
 
         tailored_path = os.path.join(book_dir, "tailored")
 
-        ScanTailorService().process_images(png_path, tailored_path)
+        # ScanTailorService().process_images(png_path, tailored_path)
+
+        processors = []
+        batch_processor = BatchProcessor(
+            input_dir=tailored_path,
+            output_dir=os.path.join(book_dir, "processed"),
+            processors=processors
+        )
 
 
 if __name__ == "__main__":
