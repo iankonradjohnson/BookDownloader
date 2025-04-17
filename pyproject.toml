@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "book-downloader"
+version = "0.1.0"
+description = "Book downloader and automation tools"
+authors = [
+    {name = "Project Team"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+dependencies = [
+    "asgiref==3.7.2",
+    "certifi==2023.7.22",
+    "charset-normalizer==3.2.0",
+    "Django==4.2.4",
+    "idna==3.4",
+    "image==1.5.33",
+    "Pillow==10.0.0",
+    "PyYAML==6.0.1",
+    "requests==2.31.0",
+    "six==1.16.0",
+    "sqlparse==0.4.4",
+    "tenacity==8.2.3",
+    "tqdm==4.66.1",
+    "typing_extensions==4.7.1",
+    "urllib3==2.0.4",
+]
+
+[project.optional-dependencies]
+windows = [
+    "winshell==0.6.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["python"]
+include = ["src*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yml"]

@@ -1,8 +1,7 @@
 import os
 from typing import Dict
 
-# Import directly from the BatchImageProcessor project path
-from batch_image_processor_project.python.src.processors.batch.batch_processor import BatchProcessor
+from python.src.processors.batch.batch_processor import BatchProcessor
 
 from python.src.book_automation.downloader.archive_downloader import ArchiveDownloader
 from python.src.book_automation.investigator.book_investigator import BookInvestigator
