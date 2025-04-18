@@ -1,7 +1,8 @@
 import os
 from typing import Dict
 
-from batch_image_processor.processors.batch.batch_processor import BatchProcessor
+from batch_image_processor.processors.image.deskew import Deskew
+from batch_image_processor.processors.single_page_processor import SinglePageProcessor
 
 from python.src.book_automation.downloader.archive_downloader import ArchiveDownloader
 from python.src.book_automation.investigator.book_investigator import BookInvestigator
@@ -39,16 +40,16 @@ class BookAutomationPipeline:
 
         # ScanTailorService().process_images(png_path, tailored_path)
 
-        processors = []
-        batch_processor = BatchProcessor(
+        SinglePageProcessor(
             input_dir=tailored_path,
-            output_dir=os.path.join(book_dir, "processed"),
-            processors=processors
-        )
+            output_dir=os.path.join(book_dir, "deskewed"),
+            processors=[Deskew(enabled=True, threshold="40%", add_border=True, 
+                               border_size="5x5", trim_borders=True, fuzz_value="1%")]
+        ).batch_process()
 
 
 if __name__ == "__main__":
-    config_path = "/config/automation/pipeline.yml"
+    config_path = "/Users/iankonradjohnson/base/abacus/BookDownloader/config/automation/pipeline.yml"
 
     config = None
     with open(config_path, 'r') as file:
