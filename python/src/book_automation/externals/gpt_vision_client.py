@@ -1,51 +1,37 @@
 import base64
 import io
-from typing import Dict, Any
+import os
 
-import openai
 from PIL import Image
+from dotenv import load_dotenv
+from openai import OpenAI
 
 
 class GPTVisionClient:
-    """
-    Generic wrapper for GPT-4o Vision calls.
-    Use the `invoke` method to send any prompt and image.
+    def __init__(self, model: str = "gpt-4o-mini"):
+        # Load environment variables from .env file
+        load_dotenv()
 
-    Example:
-        client = GPTVisionClient(model="gpt-4o-vision-mini")
-        response = client.invoke(image, system_prompt)
-    """
-
-    def __init__(self, model: str = "gpt-4o-vision-mini"):
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OpenAI API key not found. Set OPENAI_API_KEY environment variable.")
+        
+        self.client = OpenAI(api_key=api_key)
         self.model = model
 
-    def invoke(self, img: Image.Image, system_prompt: str) -> Dict[str, Any]:
-        """
-        Send an image and system prompt to GPT-4o Vision, returning parsed JSON.
-
-        Args:
-            img: PIL Image to send
-            system_prompt: string for the system role instruction
-
-        Returns:
-            Parsed JSON response (via response.choices[0].message.json())
-        """
-        # encode image as base64 data URL
+    def invoke(self, img: Image.Image, system_prompt: str) -> str:
         buffer = io.BytesIO()
         img.save(buffer, format="PNG")
         b64 = base64.b64encode(buffer.getvalue()).decode()
 
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": [
-                {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}}
-            ]}
-        ]
-
-        resp = openai.ChatCompletion.create(
+        response = self.client.responses.create(
             model=self.model,
-            messages=messages,
-            temperature=0,
-            response_format="json"
+            input=[{
+                "role": "user",
+                "content": [
+                    {"type": "input_text", "text": system_prompt},
+                    {"type": "input_image", "image_url": f"data:image/png;base64,{b64}"}
+                ]
+            }]
         )
-        return resp.choices[0].message.json()
+        return response.output_text
