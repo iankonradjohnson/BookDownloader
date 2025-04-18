@@ -1,15 +1,3 @@
 book_id: "gri_33125016354728"
+book_title: "EntwürfeZuStadtUndLandhäusern"
 book_projects_path: "/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects"
-
-# Download Settings
-max_concurrent_downloads: 5  # Maximum number of concurrent downloads
-retry_count: 3  # Number of times to retry failed downloads
-
-# Processing Modules
-modules:
-  - BookDownloader:
-      downloader_type: batch_archive_zip
-  - BookInvestigator:
-      enabled: true
-  - ArchiveExtractor:
-      enabled: true

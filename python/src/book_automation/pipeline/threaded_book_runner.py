@@ -3,6 +3,7 @@ import concurrent.futures
 import logging
 from typing import List, Optional
 import glob
+from tqdm import tqdm
 
 from python.src.book_automation.processor.image_processor import ImageProcessor
 
@@ -96,17 +97,20 @@ class ThreadedBookRunner:
                 future = executor.submit(self.processor.process, file_path, output_path)
                 future_to_file[future] = file_path
             
-            # Process results as they complete
-            for future in concurrent.futures.as_completed(future_to_file):
-                input_file = future_to_file[future]
-                try:
-                    output_file = future.result()
-                    if output_file:
-                        results.append(output_file)
-                    else:
-                        self.logger.error(f"Failed to process {input_file}")
-                except Exception as e:
-                    self.logger.exception(f"Error processing {input_file}: {e}")
+            # Process results as they complete with progress bar
+            with tqdm(total=len(files), desc="Processing files") as progress_bar:
+                for future in concurrent.futures.as_completed(future_to_file):
+                    input_file = future_to_file[future]
+                    try:
+                        output_file = future.result()
+                        if output_file:
+                            results.append(output_file)
+                        else:
+                            self.logger.error(f"Failed to process {input_file}")
+                    except Exception as e:
+                        self.logger.exception(f"Error processing {input_file}: {e}")
+                    
+                    progress_bar.update(1)
         
         self.logger.info(f"Successfully processed {len(results)} of {len(files)} files")
         return results

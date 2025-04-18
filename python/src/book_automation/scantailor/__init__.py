@@ -1,1 +1,0 @@
-from python.src.scantailor.scantailor_service import ScanTailorService
