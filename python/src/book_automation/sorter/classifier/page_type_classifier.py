@@ -12,9 +12,5 @@ class PageTypeClassifier(ABC):
     def __init__(self, types: List[PageType]):
         self.types = types
 
-    """
-    Generic interface for image type classifiers.
-    Implementations should return an enum value of type E for a given PIL image.
-    """
     def classify(self, image: Image.Image) -> PageType:
         pass

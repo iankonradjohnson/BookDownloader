@@ -5,6 +5,7 @@ import os
 from PIL import Image
 from dotenv import load_dotenv
 from openai import OpenAI
+from tenacity import retry, wait_random_exponential, stop_after_attempt
 
 
 class GPTVisionClient:
@@ -19,6 +20,7 @@ class GPTVisionClient:
         self.client = OpenAI(api_key=api_key)
         self.model = model
 
+    @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
     def invoke(self, img: Image.Image, system_prompt: str) -> str:
         buffer = io.BytesIO()
         img.save(buffer, format="PNG")

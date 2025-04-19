@@ -45,30 +45,29 @@ class BookAutomationPipeline:
         deskewed_path = os.path.join(book_dir, "deskewed")
         sorted_path = os.path.join(book_dir, "sorted")
 
-        # ThreadedBookRunner(
-        #     processor=PilImageConverter(),
-        #     input_dir=image_path,
-        #     output_dir=png_path,
-        #     file_pattern="*.jp2").run()
+        ThreadedBookRunner(
+            processor=PilImageConverter(),
+            input_dir=image_path,
+            output_dir=png_path,
+            file_pattern="*.jp2").run()
 
-        # ScanTailorService(dpi=300).process_images(png_path, tailored_path)
+        ScanTailorService(dpi=300).process_images(png_path, tailored_path)
 
-        # SinglePageProcessor(
-        #     input_dir=png_path,
-        #     output_dir=deskewed_path,
-        #     processors=[
-        #         PageCropper(),
-        #         # Deskew(enabled=True, threshold="40%", add_border=True,
-        #         #                border_size="5x5", trim_borders=True, fuzz_value="1%")
-        #     ]
-        # ).batch_process()
+        SinglePageProcessor(
+            input_dir=png_path,
+            output_dir=deskewed_path,
+            processors=[
+                PageCropper(),
+                Deskew()
+            ]
+        ).batch_process()
 
         ImageSorter(
-            Path(deskewed_path),
-            Path(sorted_path),
-            GPTVisionPageTypeClassifier(
-                [PageType.BLANK_PAGE, PageType.CONTENT_PAGE],
-                GPTVisionClient()
+            input_dir=Path(deskewed_path),
+            output_dir=Path(sorted_path),
+            classifier=GPTVisionPageTypeClassifier(
+                types=[PageType.BLANK_PAGE, PageType.CONTENT_PAGE],
+                vision_client=GPTVisionClient()
             )
         ).sort()
 

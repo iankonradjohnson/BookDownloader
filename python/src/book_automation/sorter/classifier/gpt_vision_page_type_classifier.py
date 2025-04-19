@@ -24,7 +24,7 @@ class GPTVisionPageTypeClassifier(PageTypeClassifier):
         
         {types_str}
         
-        Just output the type, thats it.
+        Just output the type, that's it.
         
         """
 
