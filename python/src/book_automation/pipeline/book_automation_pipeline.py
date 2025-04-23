@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 from typing import Dict
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 from book_automation.pipeline.threaded_book_runner import ThreadedBookRunner
 from book_automation.processor.cloud.cloud_batch_runner import CloudBatchRunner
