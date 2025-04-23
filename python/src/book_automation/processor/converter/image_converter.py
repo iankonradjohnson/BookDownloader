@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from python.src.book_automation.processor.image_processor import ImageDirectoryProcessor
+from python.src.book_automation.processor.image_processor import ImageProcessor
 
 
-class ImageConverter(ImageDirectoryProcessor, ABC):
+class ImageConverter(ImageProcessor, ABC):
     """
     Abstract base class for image converters.
     All image converters must implement this interface.

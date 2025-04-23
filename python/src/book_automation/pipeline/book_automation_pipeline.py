@@ -1,25 +1,13 @@
 import os
-import time
 from pathlib import Path
 from typing import Dict
 
-from batch_image_processor.processors.image.deskew import Deskew
-from batch_image_processor.processors.image.page_cropper import PageCropper
-from batch_image_processor.processors.single_page_processor import SinglePageProcessor
-
-from book_automation.externals.gpt_vision_client import GPTVisionClient
 from book_automation.pipeline.threaded_book_runner import ThreadedBookRunner
+from book_automation.processor.cloud.cloud_batch_runner import CloudBatchRunner
+from book_automation.processor.cloud.runpod.runpod_batch_runner import RunPodBatchRunner
 from book_automation.processor.converter.pil_image_converter import PilImageConverter
-from book_automation.processor.detector.LayoutParserDetector import LayoutParserDetector
-from book_automation.processor.detector.batch_layout_detector import BatchLayoutDetector
-from book_automation.processor.detector.document_ai_layout_detector import DocumentAILayoutDetector
+from book_automation.processor.directory.real_esrgan_processor import RealESRGANProcessor
 from book_automation.records.page_type import PageType
-from book_automation.scantailor.scantailor_service import ScanTailorService
-from book_automation.sorter.classifier.gpt_vision_page_type_classifier import \
-    GPTVisionPageTypeClassifier
-from book_automation.sorter.image_sorter import ImageSorter
-from book_automation.util.zip_util import ZipUtil
-from python.src.book_automation.downloader.archive_downloader import ArchiveDownloader
 
 
 class BookAutomationPipeline:
@@ -47,11 +35,11 @@ class BookAutomationPipeline:
         content_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value)
         content_upscaled_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value + "_upscaled")
 
-        ThreadedBookRunner(
-            processor=PilImageConverter(),
-            input_dir=image_path,
-            output_dir=png_path,
-            file_pattern="*.jp2").run()
+        # ThreadedBookRunner(
+        #     processor=PilImageConverter(),
+        #     input_dir=image_path,
+        #     output_dir=png_path,
+        #     file_pattern="*.jp2").run()
         #
         # ScanTailorService(dpi=300).process_images(png_path, tailored_path)
         #
@@ -73,10 +61,11 @@ class BookAutomationPipeline:
         #     )
         # ).sort()
 
-        CloudProcessorRunner(
+        RunPodBatchRunner(
             input_dir=Path(content_path),
             output_dir=Path(content_upscaled_path),
-        )
+            image_directory_processor=RealESRGANProcessor(model="net_g_1000000")
+        ).run()
 
 
 
