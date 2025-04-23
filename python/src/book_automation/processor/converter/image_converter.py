@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from python.src.book_automation.processor.image_processor import ImageProcessor
+from python.src.book_automation.processor.image_processor import ImageDirectoryProcessor
 
 
-class ImageConverter(ImageProcessor, ABC):
+class ImageConverter(ImageDirectoryProcessor, ABC):
     """
     Abstract base class for image converters.
     All image converters must implement this interface.
@@ -23,7 +23,7 @@ class ImageConverter(ImageProcessor, ABC):
         self.output_format = output_format
     
     @abstractmethod
-    def convert(self, input_filepath: str, output_filepath: Optional[str] = None) -> str:
+    def process(self, input_filepath: str, output_filepath: Optional[str] = None) -> str:
         """
         Convert an image from one format to another.
         
@@ -37,7 +37,4 @@ class ImageConverter(ImageProcessor, ABC):
             Path to the converted image file
         """
         pass
-    
-    def process(self, input_filepath: str, output_filepath: Optional[str] = None) -> str:
-        return self.convert(input_filepath, output_filepath)
 

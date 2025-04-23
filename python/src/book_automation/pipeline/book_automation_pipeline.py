@@ -10,6 +10,7 @@ from batch_image_processor.processors.single_page_processor import SinglePagePro
 from book_automation.externals.gpt_vision_client import GPTVisionClient
 from book_automation.pipeline.threaded_book_runner import ThreadedBookRunner
 from book_automation.processor.converter.pil_image_converter import PilImageConverter
+from book_automation.processor.detector.LayoutParserDetector import LayoutParserDetector
 from book_automation.processor.detector.batch_layout_detector import BatchLayoutDetector
 from book_automation.processor.detector.document_ai_layout_detector import DocumentAILayoutDetector
 from book_automation.records.page_type import PageType
@@ -44,12 +45,13 @@ class BookAutomationPipeline:
         deskewed_path = os.path.join(book_dir, "deskewed")
         sorted_path = os.path.join(book_dir, "sorted")
         content_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value)
+        content_upscaled_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value + "_upscaled")
 
-        # ThreadedBookRunner(
-        #     processor=PilImageConverter(),
-        #     input_dir=image_path,
-        #     output_dir=png_path,
-        #     file_pattern="*.jp2").run()
+        ThreadedBookRunner(
+            processor=PilImageConverter(),
+            input_dir=image_path,
+            output_dir=png_path,
+            file_pattern="*.jp2").run()
         #
         # ScanTailorService(dpi=300).process_images(png_path, tailored_path)
         #
@@ -71,12 +73,10 @@ class BookAutomationPipeline:
         #     )
         # ).sort()
 
-        # Use DocumentAILayoutDetector with visualization enabled
-        BatchLayoutDetector(
+        CloudProcessorRunner(
             input_dir=Path(content_path),
-            detector=DocumentAILayoutDetector(visualize=True)
-        ).detect()
-
+            output_dir=Path(content_upscaled_path),
+        )
 
 
 

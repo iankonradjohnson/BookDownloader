@@ -27,18 +27,15 @@ class BatchLayoutDetector:
             if not img_path.is_file() or img_path.suffix.lower() not in valid_suffixes:
                 continue
 
-            try:
-                # 1) Load and normalize image
-                with Image.open(img_path) as pil_img:
-                    img = pil_img.convert("RGB")
+            # 1) Load and normalize image
+            with Image.open(img_path) as pil_img:
+                img = pil_img.convert("RGB")
 
-                # 2) Detect layout blocks
-                blocks = self.detector.detect(img)
+            # 2) Detect layout blocks
+            blocks = self.detector.detect(img)
 
-                # 3) Store results
-                results[img_path] = blocks
+            # 3) Store results
+            results[img_path] = blocks
 
-            except Exception as e:
-                print(f"[BatchLayoutDetector] failed on {img_path.name}: {e}")
 
         return results

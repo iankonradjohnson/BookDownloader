@@ -5,13 +5,13 @@ from typing import List, Optional
 import glob
 from tqdm import tqdm
 
-from python.src.book_automation.processor.image_processor import ImageProcessor
+from python.src.book_automation.processor.image_processor import ImageDirectoryProcessor
 
 
 class ThreadedBookRunner:
     def __init__(
         self, 
-        processor: ImageProcessor,
+        processor: ImageDirectoryProcessor,
         input_dir: str,
         output_dir: Optional[str] = None,
         file_pattern: str = "*",

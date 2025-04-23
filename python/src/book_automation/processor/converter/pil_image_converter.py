@@ -11,7 +11,7 @@ class PilImageConverter(ImageConverter):
     def __init__(self, output_format: str = "PNG"):
         super().__init__(output_format)
 
-    def convert(self, input_filepath: str, output_filepath: Optional[str] = None) -> str:
+    def process(self, input_filepath: str, output_filepath: Optional[str] = None) -> str:
         try:
             if output_filepath is None:
                 output_ext = self.output_format.lower()

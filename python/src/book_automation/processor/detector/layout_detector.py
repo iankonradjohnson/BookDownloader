@@ -12,4 +12,4 @@ class LayoutDetector(ABC):
         """
         Given a PIL image, returns a list of LayoutElements.
         """
-        ...
+        pass

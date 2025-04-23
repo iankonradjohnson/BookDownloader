@@ -23,13 +23,13 @@ class TestImageConverter(unittest.TestCase):
             os.remove(sample_png)
 
     def test_convert_to_png(self):
-        output_path = ImageConverter.convert(self.sample_jpg)
+        output_path = ImageConverter.process(self.sample_jpg)
         self.assertEqual(output_path, "sample.png")
         self.assertTrue(os.path.exists(output_path))
         self.assertFalse(os.path.exists(self.sample_jpg))
 
     def test_convert_invalid_file(self):
-        output_path = ImageConverter.convert("nonexistent.jpg")
+        output_path = ImageConverter.process("nonexistent.jpg")
         self.assertEqual(output_path, "")
 
 

@@ -6,8 +6,13 @@ from dotenv import load_dotenv
 from PIL import Image
 
 from google.api_core.client_options import ClientOptions
-from google.cloud.documentai_v1 import DocumentProcessorServiceClient
-from google.cloud.documentai_v1.types import RawDocument, ProcessRequest, Document
+from google.cloud.documentai_v1beta3 import DocumentProcessorServiceClient
+from google.cloud.documentai_v1beta3.types import (
+    RawDocument,
+    ProcessRequest,
+    Document,
+    ProcessOptions
+)
 
 from book_automation.processor.converter.pil_image_converter import PilImageConverter
 
@@ -30,12 +35,23 @@ class DocumentAIClient:
         self.client = DocumentProcessorServiceClient(
             client_options=ClientOptions(api_endpoint=api_endpoint)
         )
-
-        self.name = f"projects/{self.project_id}/locations/{self.location}/processors/{self.processor_id}"
+        self.name = (
+            f"projects/{self.project_id}/locations/{self.location}"
+            f"/processors/{self.processor_id}"
+        )
 
     def process_image(self, image: Image.Image) -> Document:
         pdf_bytes = convert_image_to_pdf(image)
         raw_document = RawDocument(content=pdf_bytes, mime_type="application/pdf")
-        request = ProcessRequest(name=self.name, raw_document=raw_document)
+
+        layout_cfg = ProcessOptions.LayoutConfig(
+            return_bounding_boxes=True
+        )
+        opts = ProcessOptions(layout_config=layout_cfg)
+        request = ProcessRequest(
+            name=self.name,
+            raw_document=raw_document,
+            process_options=opts,
+        )
         result = self.client.process_document(request=request)
         return result.document

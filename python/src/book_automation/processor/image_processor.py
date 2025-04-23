@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Optional, List
 
 
-class ImageProcessor(ABC):
+class ImageDirectoryProcessor(ABC):
     """
     Abstract base class for image processors.
     Defines a simple interface for any component that processes images.
