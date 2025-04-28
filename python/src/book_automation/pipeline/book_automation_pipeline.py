@@ -7,10 +7,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from book_automation.pipeline.threaded_book_runner import ThreadedBookRunner
-from book_automation.processor.cloud.cloud_batch_runner import CloudBatchRunner
 from book_automation.processor.cloud.runpod.runpod_batch_runner import RunPodBatchRunner
 from book_automation.processor.converter.pil_image_converter import PilImageConverter
-from book_automation.processor.directory.real_esrgan_processor import RealESRGANProcessor
 from book_automation.records.page_type import PageType
 
 
@@ -66,9 +64,8 @@ class BookAutomationPipeline:
         # ).sort()
 
         RunPodBatchRunner(
-            input_dir=Path(content_path),
+            input_dir=Path("/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects/EntwürfeZuStadtUndLandhäusern/sorted/content_page"),#content_path),
             output_dir=Path(content_upscaled_path),
-            image_directory_processor=RealESRGANProcessor(model="net_g_1000000")
         ).run()
 
 

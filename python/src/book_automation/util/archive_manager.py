@@ -7,6 +7,7 @@ from pathlib import Path
 class ArchiveManager:
     @staticmethod
     def zip_directory(source_dir: Path, zip_name: str = "input_batch.zip") -> Path:
+        print(f"Zipping {source_dir} to {zip_name}")
         zip_path = Path(tempfile.gettempdir()) / zip_name
         shutil.make_archive(str(zip_path.with_suffix('')), 'zip', source_dir)
         return zip_path
