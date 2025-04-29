@@ -59,7 +59,10 @@ class RunPodBatchRunner:
             client = session.client
 
             print("📝 Creating job...")
+            # Extract just the filename from the path
+            filename = os.path.basename(input_path)
             job_id = client.create_job(
+                input_filename=filename,
                 model_name=self.model_name,
                 gcs_credentials_path=self.gcs_credentials_path,
                 gcs_bucket_name=self.gcs_bucket_name

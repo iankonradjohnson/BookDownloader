@@ -24,6 +24,7 @@ class SCPFileUploader(FileUploader):
         args = [
             "scp",
             "-P", self.port,
+            "-o", "StrictHostKeyChecking = no",
             "-i", "~/.ssh/id_ed25519",
             str(local_path),
             f"{self.user}@{self.host}:{remote_path}"

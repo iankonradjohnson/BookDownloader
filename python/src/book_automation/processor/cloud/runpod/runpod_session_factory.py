@@ -7,6 +7,7 @@ from typing import Optional
 import requests
 
 from book_automation.externals.real_esrgan_client import RealESRGANClient
+from book_automation.externals.runpod_gql_client import RunPodGraphQlClient
 from book_automation.processor.cloud.file_uploader import SCPFileUploader, RunPodCtlFileUploader, \
     FileUploader
 from book_automation.processor.cloud.runpod.runpod_client_session import (
@@ -23,11 +24,9 @@ class RunPodClientSessionFactory:
 
     @staticmethod
     def create_session(
-            pod_id: str = "xxqhzji8nzkoa4",
+            pod_id: str = "7w73g1lqb4bq8l",
             container_port: int = 5000,
             upload_method: FileUploadMethod = FileUploadMethod.SCP,
-            ssh_host: str = "213.181.111.2",
-            ssh_port: str = "33847",
             ssh_user: str = "root") -> RunPodClientSession:
         RunPodClientSessionFactory._launch_pod(pod_id)
         
@@ -38,6 +37,12 @@ class RunPodClientSessionFactory:
         
         file_uploader: Optional[FileUploader] = None
         if upload_method == FileUploadMethod.SCP:
+            # Get SSH info from RunPod GraphQL API
+            gql_client = RunPodGraphQlClient()
+            ssh_info = gql_client.get_pod_ssh_info(pod_id)
+            ssh_host = ssh_info["ip"]
+            ssh_port = str(ssh_info["port"])
+            
             file_uploader = SCPFileUploader(host=ssh_host, port=ssh_port, user=ssh_user)
             print(f"📂 Using SCP file uploader with host {ssh_host}:{ssh_port}")
         elif upload_method == FileUploadMethod.RUNPODCTL:

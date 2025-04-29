@@ -10,12 +10,12 @@ class RealESRGANClient:
     def __init__(self, server_url):
         self.server_url = server_url.rstrip("/")
 
-    def create_job(self, model_name, gcs_credentials_path, gcs_bucket_name):
+    def create_job(self, input_filename, model_name, gcs_credentials_path, gcs_bucket_name):
         with open(gcs_credentials_path) as f:
             gcs_credentials_json = json.load(f)
 
         payload = {
-            "receive_code": None,
+            "input_filename": input_filename,
             "model_name": model_name,
             "gcs_credentials_json": gcs_credentials_json,
             "gcs_bucket_name": gcs_bucket_name
