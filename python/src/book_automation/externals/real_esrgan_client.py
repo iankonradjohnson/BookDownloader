@@ -1,22 +1,21 @@
-import requests
-import time
-import os
 import json
+import os
 import subprocess
+import time
 
-from book_automation.util.gcs_signed_url_generator import GcsSignedUrlGenerator
+import requests
 
 
 class RealESRGANClient:
     def __init__(self, server_url):
         self.server_url = server_url.rstrip("/")
 
-    def create_job(self, receive_code, model_name, gcs_credentials_path, gcs_bucket_name):
+    def create_job(self, model_name, gcs_credentials_path, gcs_bucket_name):
         with open(gcs_credentials_path) as f:
             gcs_credentials_json = json.load(f)
 
         payload = {
-            "receive_code": receive_code,
+            "receive_code": None,
             "model_name": model_name,
             "gcs_credentials_json": gcs_credentials_json,
             "gcs_bucket_name": gcs_bucket_name
@@ -40,7 +39,6 @@ class RealESRGANClient:
             time.sleep(poll_interval)
 
     def download_output(self, url, output_dir="./downloads") -> str:
-
         os.makedirs(output_dir, exist_ok=True)
 
         output_file = os.path.join(output_dir, "output.zip")
@@ -48,7 +46,7 @@ class RealESRGANClient:
         print(f"Downloading with aria2c to {output_file}...")
         subprocess.run([
             "aria2c", "--file-allocation=none", "-x", "16", "-s", "16",
-            "-d", output_dir, "-o", "output.zip",  # <-- always saving as output.zip
+            "-d", output_dir, "-o", "output.zip",
             url
         ], check=True)
 

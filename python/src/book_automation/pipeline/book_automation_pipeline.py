@@ -64,7 +64,7 @@ class BookAutomationPipeline:
         # ).sort()
 
         RunPodBatchRunner(
-            input_dir=Path("/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects/EntwürfeZuStadtUndLandhäusern/sorted/content_page"),#content_path),
+            input_dir=Path("/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects/EntwürfeZuStadtUndLandhäusern/sorted/test"),#content_path),
             output_dir=Path(content_upscaled_path),
         ).run()
 

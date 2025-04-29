@@ -1,16 +1,14 @@
 import os
 import shutil
 import tempfile
-import subprocess
-import threading
-import time
 from pathlib import Path
+
 from dotenv import load_dotenv
 
-from book_automation.processor.cloud.runpod.runpod_session_factory import RunPodClientSessionFactory
+from book_automation.processor.cloud.runpod.runpod_session_factory import \
+    RunPodClientSessionFactory, FileUploadMethod
 from book_automation.util.gcs_signed_url_generator import GcsSignedUrlGenerator
 
-# Load environment variables from .env
 load_dotenv()
 
 class RunPodBatchRunner:
@@ -19,12 +17,14 @@ class RunPodBatchRunner:
                  output_dir: Path,
                  gcs_bucket_name: str = "abacus-upscale-jobs",
                  container_port: int = 5000,
-                 model_name: str = "net_g_1000000"):
+                 model_name: str = "net_g_1000000",
+                 upload_method: FileUploadMethod = FileUploadMethod.SCP):
         self.input_dir = input_dir
         self.output_dir = output_dir
         self.gcs_bucket_name = gcs_bucket_name
         self.container_port = container_port
         self.model_name = model_name
+        self.upload_method = upload_method
 
         gcs_credentials_path = os.getenv("GCS_CREDENTIALS_PATH")
         if not gcs_credentials_path:
@@ -45,19 +45,21 @@ class RunPodBatchRunner:
         )
         print(f"✅ Input zipped to {input_zip}")
 
-        print("🚀 Uploading input zip to RunPod...")
-        receive_code = self._send_zip_and_get_receive_code(input_zip)
-        print(f"✅ Received code: {receive_code}")
-
         print("🚀 Creating RunPod session...")
-        session = RunPodClientSessionFactory.create_session()
+        session = RunPodClientSessionFactory.create_session(
+            container_port=self.container_port,
+            upload_method=self.upload_method
+        )
 
         try:
+            print("📤 Uploading input zip to RunPod...")
+            input_path = session.upload_file(input_zip)
+            print(f"✅ File uploaded: {input_path}")
+
             client = session.client
 
             print("📝 Creating job...")
             job_id = client.create_job(
-                receive_code=receive_code,
                 model_name=self.model_name,
                 gcs_credentials_path=self.gcs_credentials_path,
                 gcs_bucket_name=self.gcs_bucket_name
@@ -80,41 +82,10 @@ class RunPodBatchRunner:
 
         finally:
             print("🧹 Cleaning up: Stopping pod...")
-            session.stop_pod()
-
-    @staticmethod
-    def _send_zip_and_get_receive_code(zip_path: Path) -> str:
-        process = subprocess.Popen(
-            ["runpodctl", "send", str(zip_path)],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            bufsize=1  # line-buffered
-        )
-
-        receive_code = None
-
-        def read_stdout():
-            nonlocal receive_code
-            for line in process.stdout:
-                receive_code = line.strip()
-                return
-
-        # Start a thread to read stdout without blocking
-        thread = threading.Thread(target=read_stdout)
-        thread.start()
-
-        # Give it a few seconds to *try* to get the receive code
-        for _ in range(10):
-            if receive_code:
-                return receive_code
-            time.sleep(0.5)
-
-        raise RuntimeError("Failed to obtain receive code from runpodctl send output.")
+            # session.stop_pod()
 
     def _unzip_to_output(self, zip_path: Path):
         print(f"📂 Unzipping {zip_path} to {self.output_dir}...")
-        time.sleep(5)
         shutil.unpack_archive(str(zip_path), extract_dir=str(self.output_dir))
 
     def _delete_zip(self, zip_path: Path):
