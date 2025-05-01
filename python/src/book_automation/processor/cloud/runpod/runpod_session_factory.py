@@ -24,7 +24,7 @@ class RunPodClientSessionFactory:
 
     @staticmethod
     def create_session(
-            pod_id: str = "7w73g1lqb4bq8l",
+            pod_id: str = "r3wdkf9k23wbiz",
             container_port: int = 5000,
             upload_method: FileUploadMethod = FileUploadMethod.SCP,
             ssh_user: str = "root") -> RunPodClientSession:

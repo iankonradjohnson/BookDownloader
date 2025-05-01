@@ -85,7 +85,7 @@ class RunPodBatchRunner:
 
         finally:
             print("🧹 Cleaning up: Stopping pod...")
-            # session.stop_pod()
+            session.stop_pod()
 
     def _unzip_to_output(self, zip_path: Path):
         print(f"📂 Unzipping {zip_path} to {self.output_dir}...")

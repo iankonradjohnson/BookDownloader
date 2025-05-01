@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 from typing import Dict
+
+from batch_image_processor.processors.image.border_processor import BorderProcessor
+from batch_image_processor.processors.image.threshold_filter import ThresholdFilter
+from batch_image_processor.processors.image.threshold_processor import ThresholdProcessor
+from batch_image_processor.processors.single_page_processor import SinglePageProcessor
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -36,6 +41,7 @@ class BookAutomationPipeline:
         sorted_path = os.path.join(book_dir, "sorted")
         content_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value)
         content_upscaled_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value + "_upscaled")
+        threshold_path = os.path.join(sorted_path, PageType.CONTENT_PAGE.value + "_upscaled_threshold")
 
         # ThreadedBookRunner(
         #     processor=PilImageConverter(),
@@ -63,10 +69,26 @@ class BookAutomationPipeline:
         #     )
         # ).sort()
 
-        RunPodBatchRunner(
-            input_dir=Path("/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects/EntwürfeZuStadtUndLandhäusern/sorted/test"),#content_path),
-            output_dir=Path(content_upscaled_path),
-        ).run()
+        # RunPodBatchRunner(
+        #     input_dir=Path("/Users/iankonradjohnson/Library/CloudStorage/GoogleDrive-iankonradjohnson@gmail.com/My Drive/base/abacus/BookProjects/EntwürfeZuStadtUndLandhäusern/sorted/content_page"),
+        #     output_dir=Path(content_upscaled_path),
+        # ).run()
+
+        SinglePageProcessor(
+            input_dir=content_upscaled_path,
+            output_dir=threshold_path,
+            processors=[
+                ThresholdProcessor(threshold_value=180),
+                BorderProcessor(top=350, bottom=400, left=300, right=450)
+            ]
+        ).batch_process()
+
+        ImageFolderCsvCreator(
+            img_dir=Path(threshold_path),
+            csv_path=Path(os.path.join(threshold_path, "out.csv"))
+        ).create()
+
+
 
 
 
