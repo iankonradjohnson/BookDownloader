@@ -1,0 +1,1 @@
+"""CSV generation utilities for book automation."""

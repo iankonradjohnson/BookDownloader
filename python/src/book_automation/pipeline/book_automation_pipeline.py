@@ -14,6 +14,7 @@ load_dotenv()
 from book_automation.pipeline.threaded_book_runner import ThreadedBookRunner
 from book_automation.processor.cloud.runpod.runpod_batch_runner import RunPodBatchRunner
 from book_automation.processor.converter.pil_image_converter import PilImageConverter
+from book_automation.processor.csv_generator.image_folder_csv_creator import ImageFolderCsvCreator
 from book_automation.records.page_type import PageType
 
 
@@ -74,14 +75,14 @@ class BookAutomationPipeline:
         #     output_dir=Path(content_upscaled_path),
         # ).run()
 
-        SinglePageProcessor(
-            input_dir=content_upscaled_path,
-            output_dir=threshold_path,
-            processors=[
-                ThresholdProcessor(threshold_value=180),
-                BorderProcessor(top=350, bottom=400, left=300, right=450)
-            ]
-        ).batch_process()
+        # SinglePageProcessor(
+        #     input_dir=content_upscaled_path,
+        #     output_dir=threshold_path,
+        #     processors=[
+        #         ThresholdProcessor(threshold_value=180),
+        #         BorderProcessor(top=350, bottom=400, left=300, right=450)
+        #     ]
+        # ).batch_process()
 
         ImageFolderCsvCreator(
             img_dir=Path(threshold_path),
