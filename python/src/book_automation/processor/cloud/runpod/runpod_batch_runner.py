@@ -13,12 +13,14 @@ load_dotenv()
 
 class RunPodBatchRunner:
     def __init__(self,
+                 runpod_pod_id,
                  input_dir: Path,
                  output_dir: Path,
                  gcs_bucket_name: str = "abacus-upscale-jobs",
                  container_port: int = 5000,
                  model_name: str = "net_g_1000000",
                  upload_method: FileUploadMethod = FileUploadMethod.SCP):
+        self.runpod_pod_id = runpod_pod_id
         self.input_dir = input_dir
         self.output_dir = output_dir
         self.gcs_bucket_name = gcs_bucket_name
@@ -47,6 +49,7 @@ class RunPodBatchRunner:
 
         print("🚀 Creating RunPod session...")
         session = RunPodClientSessionFactory.create_session(
+            pod_id=self.runpod_pod_id,
             container_port=self.container_port,
             upload_method=self.upload_method
         )
